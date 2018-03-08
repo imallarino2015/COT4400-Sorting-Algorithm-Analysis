@@ -83,4 +83,33 @@ void quicksort(int A[],int p,int r){
     }
 }
 
+///Bonus: Heap sort
+void maxHeapify(int A[],int n,int i){
+    int l=2*i+1;
+    int r=2*i+2;
+    int largest=l<n&&A[l]>A[i]?l:i;
+
+    if(r<n&&A[r]>A[largest])
+        largest=r;
+
+    if(largest!=i){
+        exchange(A[i],A[largest]);
+        maxHeapify(A,n,largest);
+    }
+}
+
+void buildMaxHeap(int A[],int n){
+    for(int i=n/2;i>=0;i--)
+        maxHeapify(A,n,i);
+}
+
+void heapSort(int A[],int n){
+    buildMaxHeap(A,n);
+    for(int i=n-1;i>=1;i--){
+        n--;
+        exchange(A[0],A[i]);
+        maxHeapify(A,n,0);
+    }
+}
+
 #endif // SORT_H_INCLUDED
