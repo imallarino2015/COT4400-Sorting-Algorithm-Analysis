@@ -15,6 +15,7 @@
 using namespace std;
 
 void copyArr(int[],int[],int);
+void printArr(int[],int,int);
 bool isSorted(int[],int);
 
 int main(){
@@ -129,12 +130,36 @@ int main(){
         outFile<<endl;
     }
 
+    //heap sort
+    cout<<"Testing heap sort."<<endl;
+    for(int arrSize=N_S;arrSize<=N_F;arrSize+=N_D){
+        outFile<<"Heap Sort\t"<<arrSize<<"\t";
+        for(int run=0;run<M;run++){
+            copyArr(dataLib[run],currentData,arrSize);
+
+            iTime=chrono::steady_clock::now();
+            heapSort(currentData,arrSize-1);
+            fTime=chrono::steady_clock::now();
+
+            eTime=1000*chrono::duration_cast<chrono::duration<double> >(fTime-iTime).count();
+            outFile<<eTime<<"\t";
+            cout<<"Run "<<run+1<<" completed for heap sort of "<<arrSize<<" elements. Elapsed time: "<<eTime<<" ms."<<endl;
+        }
+        outFile<<endl;
+    }
+    
     return 0;
 }
 
 void copyArr(int sourceArr[],int destinationArr[],int length){
     for(int a=0;a<length;a++)
         destinationArr[a]=sourceArr[a];
+}
+
+void printArr(int A[],int start,int arrSize){
+    for(int a=start;a<arrSize;a++)
+        cout<<A[a]<<" ";
+    cout<<endl;
 }
 
 bool isSorted(int A[],int arrSize){  //checks that the array is sorted
